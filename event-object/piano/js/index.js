@@ -25,11 +25,23 @@ function addClassPiano(event) {
       sources = sounds.lower;
       break;
 
-    case 'AltRight' :
+      case 'ShiftRight' :
+        piano.classList.remove('middle');
+        piano.classList.toggle('lower');
+        sources = sounds.lower;
+        break;
+
+    case 'AltLeft':
       piano.classList.remove('middle');
       piano.classList.toggle('higher');
       sources = sounds.higher;
       break;
+
+      case 'AltRight':
+        piano.classList.remove('middle');
+        piano.classList.toggle('higher');
+        sources = sounds.higher;
+        break;
   }
 }
 
