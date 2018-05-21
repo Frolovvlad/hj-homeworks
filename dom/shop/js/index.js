@@ -8,11 +8,11 @@ const shop = document.getElementById('container'),
 let price = 0,
     count = 0;
 
-function updateCountAndPrice() {
-  totalPrice.innerHTML = price += Number(this.dataset.price);
-  cartCount.innerHTML = count += 1;
-}
-
 for(let btn of buttons){
-  btn.addEventListener('click', updateCountAndPrice);
+  btn.addEventListener('click', function() {
+    let getPrice = Number(getPriceFormatted(this.dataset.price))
+    console.log(typeof getPrice);
+    totalPrice.innerHTML = price += getPrice;
+    cartCount.innerHTML = count += 1;
+  });
 }
