@@ -10,9 +10,9 @@ let price = 0,
 
 for(let btn of buttons){
   btn.addEventListener('click', function() {
-    let getPrice = Number(getPriceFormatted(this.dataset.price))
-    console.log(typeof getPrice);
-    totalPrice.innerHTML = price += getPrice;
+    let getPrice = Number(this.dataset.price),
+        totalAmount = price += getPrice;;
+    totalPrice.innerHTML = getPriceFormatted(totalAmount);
     cartCount.innerHTML = count += 1;
   });
 }
