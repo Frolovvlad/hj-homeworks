@@ -1,61 +1,53 @@
 'use strict';
-const signInHtm = document.querySelector('.sign-in-htm');
-const signUpHtm = document.querySelector('.sign-up-htm');
-const errorMessage = document.querySelector('.error-message');
-const buttonSignIn = signInHtm.querySelector('.button');
-buttonSignIn.addEventListener('click', function() {
-  const inputsSignIn = signInHtm.getElementsByTagName('input');
-  cteateMes(inputsSignIn);
-  fetch('https://neto-api.herokuapp.com/signin', {
-      body: JSON.stringify({
-        'email': emailSignIn.value,
-        'password': passSignIn.value
-      }),
-      credentials: 'same-origin', // 'include' | 'omit'
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(function(res) {
-      let result = JSON.parse(res);
-      alert(`Пользователь ${result.name} успешно авторизован`);
-    })
-    .catch((err) => {
-      let error = JSON.parse(err);
-      errorMessage.innerHTML = error.message;
-    });
-});
-const buttonSignUp = signInHtm.querySelector('.button');
-const inputsSignUp = signUpHtm.getElementsByTagName('input');
+const signInHtm = document.querySelector('.sign-in-htm'),
+      signUpHtm = document.querySelector('.sign-up-htm'),
+      signInErrorMessage = signInHtm.querySelector('.error-message'),
+      signUpErrorMessage = signUpHtm.querySelector('.error-message'),
+      buttonSignIn = signInHtm.querySelector('.button'),
+      buttonSignUp = signUpHtm.querySelector('.button');
 
-function cteateMes(filledForm) {
-  let form = {};
-  Array.from(filledForm)
-    .forEach(input => {
-      if (input.name) {
-        let item = input.name;
-        form[item] = input.value;
-      }
-    });
-}
-buttonSignUp.addEventListener('click', function() {
-  const inputsSignUp = signUpHtm.getElementsByTagName('input');
-  cteateMes(inputsSignUp);
-  fetch(' https://neto-api.herokuapp.com/signup', {
-      body: JSON.stringify(form),
-      credentials: 'same-origin', // 'include' | 'omit'
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-    .then(function(res) {
-      let result = JSON.parse(res);
-      alert(`Пользователь ${result.name} успешно зарегистрирован`);
-    })
-    .catch((err) => {
-      let error = JSON.parse(err);
-      errorMessage.innerHTML = error.message;
-    });
+var xhr = new XMLHttpRequest();
+
+//Пароль/Логин
+
+buttonSignIn.addEventListener('click', function(event) {
+  const formData = new FormData(signInHtm);
+  event.preventDefault();
+
+  xhr.open('POST', 'https://neto-api.herokuapp.com/signin');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify(formData));
+
+  for (const [k, v] of formData) { console.log(k + ': ' + v); }
+
+  xhr.addEventListener('load', function() {
+    var data = JSON.parse(xhr.responseText);
+    if(data.error) {
+      signInErrorMessage.textContent = data.message;
+    } else {
+      alert(`Пользователь ${data.name} успешно авторизован`);
+    }
+  })
+});
+
+//Регистрация
+
+buttonSignUp.addEventListener('click', function(event) {
+  const formData = new FormData(signUpHtm);
+  event.preventDefault();
+
+  xhr.open('POST', 'https://neto-api.herokuapp.com/signup');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify(formData));
+
+  for (const [k, v] of formData) { console.log(k + ': ' + v); }
+
+  xhr.addEventListener('load', function() {
+    var data = JSON.parse(xhr.responseText);
+    if(data.error) {
+      signUpErrorMessage.textContent = data.message;
+    } else {
+      alert(`Пользователь ${data.name} успешно зарегистрирован`);
+    }
+  })
 });
