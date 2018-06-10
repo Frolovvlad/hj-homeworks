@@ -64,4 +64,3 @@ document.querySelector('.big-book__pupil').style.setProperty('--pupil-size', 2);
 5. Добавить репозиторий в проект `git remote add homeworks %repo-url%`, где `%repo-url%` — адрес созданного репозитория.
 6. Опубликовать код в репозиторий `homeworks` с помощью команды `git push -u homeworks master`.
 7. Прислать ссылку на репозиторий через личный кабинет на сайте [netology.ru](http://netology.ru/).
-
